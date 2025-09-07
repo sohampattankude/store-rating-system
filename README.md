@@ -36,5 +36,68 @@ Built with **Node.js, Express, MySQL** for backend and **HTML, CSS, JavaScript**
 
 ---
 
-## 📂 Project Structure
+## Project Structure
+
+store-rating-platform/
+├── backend/
+│ ├── config
+|    ├──database.js
+│ ├── node modules
+| ├── routes
+|    ├──admin.js
+|    ├──auth.js
+|    ├──store.js
+|    ├──user.js
+| ├──package.json
+| ├──package_lock.json
+| ├──server.js
+├── frontend/
+│ ├── public
+|    ├──index.html
+│ ├── src
+|    ├──App.css
+|    ├──App.js
+|    ├──inex.js
+│ ├── package.json
+├──daatbase
+| ├──schema.sql
+| ├──seed.sql
+└── README.md
+
+
+
+---
+
+## 🗄 Database Schema
+
+sql
+CREATE DATABASE store_rating;
+
+USE store_rating;
+
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  email VARCHAR(100) UNIQUE,
+  password VARCHAR(255),
+  role ENUM('user','owner','admin')
+);
+
+CREATE TABLE stores (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  address VARCHAR(255),
+  owner_id INT,
+  FOREIGN KEY (owner_id) REFERENCES users(id)
+);
+
+CREATE TABLE ratings (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  store_id INT,
+  user_id INT,
+  value INT,
+  FOREIGN KEY (store_id) REFERENCES stores(id),
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
 
